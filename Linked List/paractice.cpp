@@ -1,23 +1,20 @@
 #include<iostream>
-#include<unordered_map>
 using namespace std;
 
 class ListNode{
     public:
         int data;
         ListNode* next;
-        ListNode* random;
 
     ListNode(int d){
         this->data = d;
         this->next = nullptr;
-        this->random = nullptr;
     }
 
     ~ListNode(){}
 };
 
-ListNode* insertData(ListNode* head){
+ListNode* insertData(ListNode* head, ListNode* &tail){
     int data;
     cout<<"Enter the data"<<endl;
     cin>>data;
@@ -27,79 +24,9 @@ ListNode* insertData(ListNode* head){
         return nullptr;
     }
 
-    head->next = insertData(head->next);
+    head->next = insertData(head->next, tail = head);
 
     return head;
-}
-
-void insertAtTail(ListNode* &cloneHead, ListNode* &cloneTail, int data){
-    if(cloneHead == nullptr){
-        cloneHead = new ListNode(data);
-        cloneTail = cloneHead;
-        return;
-    }
-    ListNode* temp = new ListNode(data);
-    cloneTail->next = temp;
-    cloneTail = temp;   
-}
-
-ListNode* cloneList(ListNode* head1){
-    ListNode* cloneHead = nullptr;
-    ListNode* cloneTail = nullptr;
-    ListNode* temp = head1;
-
-    //Creating List without random pointer.
-    while(temp != nullptr){
-        insertAtTail(cloneHead, cloneTail, temp->data);
-        temp = temp->next;
-    }
-    unordered_map<ListNode*,ListNode*> nodeToRandomNode;
-    ListNode* originalNode = head1;
-    ListNode* cloneNode = cloneHead;
-    
-    // while(originalNode != nullptr){
-    //     nodeToRandomNode[originalNode] = cloneNode;
-    //     originalNode = originalNode->next;
-    //     cloneNode = cloneNode->next;
-    // }
-    // originalNode = head1;
-    // cloneNode = cloneHead;
-
-    // while(originalNode != nullptr){
-    //     cloneNode->random = nodeToRandomNode[originalNode->random];
-    //     cloneNode = cloneNode->next;
-    //     originalNode = originalNode->next;
-    // }
-
-    while(originalNode != nullptr){
-        ListNode* next = originalNode->next;
-        originalNode->next = cloneNode;
-        originalNode = next;
-
-        next = cloneNode->next;
-        cloneNode->next = originalNode;
-        cloneNode = next;
-    }
-
-    ListNode* temp1 = head1;
-    while(temp1 != nullptr){
-        if(temp1->next != nullptr){
-            temp1->next->random = temp1->random ? temp1->random->next : temp1->random;
-        }
-        temp1 = temp1->next->next;
-    }
-    originalNode = head1;
-    cloneNode = cloneHead;
-
-    while(originalNode != nullptr){
-        originalNode->next = cloneNode->next;
-        originalNode = originalNode->next;
-        if(originalNode != nullptr){
-            cloneNode->next = originalNode->next;
-        }
-        cloneNode = cloneNode->next;
-    }
-    return cloneHead;
 }
 
 void print(ListNode* head){
@@ -110,22 +37,60 @@ void print(ListNode* head){
     cout<<endl;
 }
 
+int getLen(ListNode* head){
+    int count = 0;
+    while(head != nullptr){
+        count++;
+        head = head->next;
+    }
+
+    return count;
+}
+
+ListNode* reverseInKGroups(ListNode* head, int len, int k){
+    ListNode* curr = head;
+    ListNode* prev = nullptr;
+    ListNode* next = nullptr;
+
+    int count = 0;
+
+    while(curr != nullptr && count < k){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+    //Recursive call.
+    if(next != nullptr && (len-k) >= k){
+        head->next = reverseInKGroups(next, len-k, k);
+    }
+    else if((len-k) < k){
+        head->next = next;
+    }
+
+    return prev;
+}
+
 int main()
 {
     ListNode* head = nullptr;
+    ListNode* tail = head;
 
-    // 1 2 3 4  5 6 7 8 9 10.
+    head = insertData(head, tail);
 
-    head = insertData(head);
-
+    cout<<"Before Reversing in K groups"<<endl;
     print(head);
 
-    head->random = head->next->next;
-    head->next->random = head->next->next->next;
-    head->next->next->random = head->next;
+    int k;
+    cout<<"Enter the group in which you want to reverse"<<endl;
+    cin>>k;
 
-    ListNode* ans = cloneList(head);
+    int len = getLen(head);
 
+    ListNode* ans = reverseInKGroups(head, len, k);
+
+    cout<<"After reversing in K groups"<<endl;
     print(ans);
 
     return 0;

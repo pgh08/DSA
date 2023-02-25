@@ -45,7 +45,7 @@ void printing(ListNode* head){
     cout<<endl;
 }
 
-ListNode* reverseInK(ListNode* head, int k){
+/* ListNode* reverseInK(ListNode* head, int k){
     //Base case.
     if(head == nullptr){
         return nullptr;
@@ -67,6 +67,41 @@ ListNode* reverseInK(ListNode* head, int k){
         head->next = reverseInK(next, k);
     }
     return prev;
+} */
+
+int getLen(ListNode* head){
+    int count = 0;
+    while(head != nullptr){
+        count++;
+        head = head->next;
+    }
+
+    return count;
+}
+
+ListNode* reverseInKGroups(ListNode* head, int len, int k){
+    ListNode* curr = head;
+    ListNode* prev = nullptr;
+    ListNode* next = nullptr;
+
+    int count = 0;
+
+    while(curr != nullptr && count < k){
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+    //Recursive call.
+    if(next != nullptr && (len-k) >= k){
+        head->next = reverseInKGroups(next, len-k, k);
+    }
+    else if((len-k) < k){
+        head->next = next;
+    }
+
+    return prev;
 }
 
 int main()
@@ -84,8 +119,13 @@ int main()
     cin>>k;
 
     cout<<"After reversing in 'K' groups"<<endl;
+    int len = getLen(head);
 
-    ListNode* res = reverseInK(head, k);
+    // To reverse in group even if k number of nodes is not left at the end.
+    //ListNode* res = reverseInK(head, k);
+
+    // To reverse in group only if k number of nodes left at the end.
+    ListNode* res = reverseInKGroups(head, len, k);
 
     printing(res);
 

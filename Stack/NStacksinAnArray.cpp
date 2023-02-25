@@ -7,25 +7,25 @@ class Stack{
         int *top;
         int *next;
         int freespot;
-        int n, s;
+        int n, size;
 
     public:
         Stack(int N, int S){
             n = N;
-            s= S;
-            arr = new int[s];
+            size = S;
+            arr = new int[size];
             top = new int[n];
             freespot = 0;
-            next = new int[s];
+            next = new int[size];
 
             for(int i=0; i<n; i++){
                 top[i] = -1;
             }
 
-            for(int i=0; i<s; i++){
+            for(int i=0; i<size; i++){
                 next[i] = i+1;
             }
-            next[s-1] = -1;
+            next[size-1] = -1;
         }
 
         bool push(int x, int m){
