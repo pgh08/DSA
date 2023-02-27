@@ -11,7 +11,7 @@ int main()
         cout<<"Not possible"<<endl;
         return 0;
     }
-    stack<int> st;
+    stack<char> st;
 
     for(int i=0; i<s.length(); i++){
         char ch = s[i];
@@ -26,15 +26,15 @@ int main()
             else{
                 st.push(ch);
             }
-        }
-        while(!st.empty()){
-            if(st.top() == '{'){
-                b++;
+            while(!st.empty()){
+                if(st.top() == '{'){
+                    b++;
+                }
+                else{
+                    a++;
+                }
+                st.pop();
             }
-            else{
-                a++;
-            }
-            st.pop();
         }
     }
     int ans = ((a+1)/2) + ((b+1)/2);

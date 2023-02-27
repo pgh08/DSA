@@ -1,3 +1,6 @@
+// Top-Down Approach : Time Complexity : O(n), Space Complexity : O(n).
+// Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
+// Space Optimized Approach : Time Complexity : O(n), Space Complexity : O(1).
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -16,8 +19,19 @@ int NumberOfCombination(int n){
     return dp[n] = NumberOfCombination(n-1) + NumberOfCombination(n-2); 
 }
 
-//Bottom up approach.
-int bottomUp(int n){
+int bottomUpCombinations(int n){
+    int dp[n+1];
+    dp[0] = 1;
+    dp[1] = 1;
+
+    for(int i=2; i<=n; i++){
+        dp[i] = dp[i-1] + dp[i-2];
+    }
+    return dp[n];
+}
+
+// Space optimized approach.
+int SpaceOptimizedClimingStairs(int n){
     int one = 1;
     int two = 1;
     for(int i=0; i<n-1; i++){
@@ -32,11 +46,15 @@ int main()
 {
     memset(dp, -1, sizeof(dp));
     int n;
-    cin>>n;
-    int ans = NumberOfCombination(n);
-    int ans1 = bottomUp(n);
 
-    cout<<"Total number of combination is "<<ans1<<endl;
+    cout<<"Enter the number of stairs"<<endl;
+    cin>>n;
+
+    // int ans = NumberOfCombination(n);
+    // int ans1 = bottomUpCombinations(n);
+    int optimized = SpaceOptimizedClimingStairs(n);
+
+    cout<<"Total number of combination is : "<<optimized<<endl;
 
     return 0;
 }

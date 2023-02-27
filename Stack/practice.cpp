@@ -1,49 +1,69 @@
 #include<iostream>
+#include<vector>
+#include<limits.h>
 #include<stack>
 using namespace std;
 
-bool isRedundant(string s){
-    stack<char> st;
-    int size = s.length();
+void findNextSmaller(vector<int> &heights, int n, vector<int> &next){
+    stack<int> st;
+    st.push(-1);
 
-    for(int i=0; i<size; i++){
-        char ch = s[i];
-
-        if(ch == '(' || ch == '+' || ch == '-' || ch == '/' || ch == '*'){
-            st.push(ch);
+    for(int i=n-1; i>=n-1; i--){
+        int curr = heights[i];
+        while(st.top() != -1 && heights[st.top()] >= curr){
+            st.pop();
         }
-        else{
-            if(ch == ')'){
-                bool redundant = true;
-
-                while(st.top() != '('){
-                    if(st.top() == '+' || st.top() == '-' || st.top() == '/' || st.top() == '*'){
-                        redundant = false;
-                    }
-                    st.pop();
-                }
-                if(redundant == true){
-                    return true;
-                }
-                st.pop();
-            }
-        }
+        next[i] = st.top();
+        st.push(i);
     }
+}
 
-    return false;
+void findPreviousSmaller(vector<int> &heights, int n, vector<int> &prev){
+    stack<int> st;
+    st.push(-1);
+
+    for(int i=0; i<n; i++){
+        int curr = heights[i];
+        while(st.top() != -1 && heights[st.top()] >= curr){
+            st.pop();
+        }
+        prev[i] = st.top();
+        st.push(i);
+    }
 }
 
 int main()
 {
-    string s;
-    cin>>s;
+    int n;
+    cout<<"Enter the number of bars are there in histogram"<<endl;
+    cin>>n;
 
-    if(isRedundant(s)){
-        cout<<"Redundant brackets present"<<endl;
+    vector<int> heights(n);
+    cout<<"Enter the heights of the histogram bars"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>heights[i];
     }
-    else{
-        cout<<"No redundant brackets"<<endl;
+
+    vector<int> next(n);
+
+    findNextSmaller(heights, n, next);
+
+    vector<int> prev(n);
+
+    findPreviousSmaller(heights, n, prev);
+
+    int area = INT_MIN;
+    for(int i=0; i<n; i++){
+        int length = heights[i];
+        if(next[i] == -1){
+            next[i] = n;
+        }
+        int breadth = next[i] - prev[i] - 1;
+        int eachArea = length*breadth;
+        area = max(eachArea, area);
     }
+
+    cout<<"Largest area in histogram is : "<<area<<endl;
 
     return 0;
 }
