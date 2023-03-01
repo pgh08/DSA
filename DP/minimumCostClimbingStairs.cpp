@@ -27,6 +27,31 @@ int topDownMinimumCost(vector<int> &cost, int n, vector<int> &dp){
     return dp[n];
 }
 
+int bottomUpMinCost(vector<int> &cost, int n){
+    vector<int> dp(n+1);
+    dp[0] = cost[0];
+    dp[1] = cost[1];
+
+    for(int i=0; i<n; i++){
+        dp[i] = cost[i] + min(dp[i-1], dp[i-2]);
+    }
+    return min(dp[n-1], dp[n-2]);
+}
+
+int spaceOptimizedCost(vector<int> &cost, int n){
+    int twoBack = cost[0];
+    int oneBack = cost[1];
+
+    for(int i=2; i<n; i++){
+        int curr = cost[i] + min(oneBack,twoBack);
+
+        // Shifting logic.
+        twoBack = oneBack;
+        oneBack = curr;
+    }
+    return min(oneBack, twoBack);
+}
+
 int main()
 {
     int n;
@@ -42,11 +67,15 @@ int main()
 
     // int recursiveSolution = min(solve(cost, n-1), solve(cost, n-2));
 
-    vector<int> dp(n+1, -1);
+    // vector<int> dp(n+1, -1);
     
-    int ans1 = min(topDownMinimumCost(cost, n-1, dp), topDownMinimumCost(cost, n-2, dp));
+    // int ans1 = min(topDownMinimumCost(cost, n-1, dp), topDownMinimumCost(cost, n-2, dp));
 
-    cout<<"Minimum cost to climb the stairs is : "<<ans1<<endl;
+    // int ans2 = bottomUpMinCost(cost, n);
+
+    int ans3 = spaceOptimizedCost(cost, n);
+
+    cout<<"Minimum cost to climb the stairs is : "<<ans3<<endl;
 
     return 0;
 }
