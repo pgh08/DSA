@@ -71,14 +71,9 @@ class Stack{
 int main()
 {
     Stack s1;
-    s1.push(5);
-    s1.push(3);
-    s1.push(8);
     s1.push(2);
-    s1.push(4);
-    s1.pop();
-    s1.pop();
-    int ans = s1.getMin();
+    s1.push(1);
+    int ans = s1.pop();
 
     cout<<ans<<endl;
 

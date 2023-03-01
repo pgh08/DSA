@@ -30,7 +30,7 @@ class TwoStack{
             arr[top2] = num;
         }
         else{
-            cout<<"Stcak Overflow"<<endl;
+            cout<<"Stack Overflow"<<endl;
         }
     }
 
