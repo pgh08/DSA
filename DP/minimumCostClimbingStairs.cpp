@@ -1,3 +1,7 @@
+// 1. Rcursive Solution : Time Complexity : O(n^2), Space Complexity : O(n).
+// 2. Top Down Approach : Time Complexity : O(n), Space Complexity : O(n).
+// 3. Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
+// 4. Space Optimized Approach : TIme Complexity : O(n), Space Complexity : O(1). 
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -11,6 +15,18 @@ int solve(vector<int> &cost, int n){
     return ans;
 }
 
+int topDownMinimumCost(vector<int> &cost, int n, vector<int> &dp){
+    // Base Case.
+    if(n <= 1){
+        return dp[n] = cost[n];
+    }
+    if(dp[n] != -1){
+        return dp[n];
+    }
+    dp[n] = cost[n] + min(topDownMinimumCost(cost, n-1, dp), topDownMinimumCost(cost, n-2, dp));
+    return dp[n];
+}
+
 int main()
 {
     int n;
@@ -19,14 +35,18 @@ int main()
 
     vector<int> cost(n);
     cout<<"Enter the cost for climbing each stairs"<<endl;
+    // 1 100 1 1 1 100 1 1 100 1. ans = 6.
     for(int i=0; i<n; i++){
         cin>>cost[i];
     }
 
-    int recursiveSolution = min(solve(cost, n-1), solve(cost, n-2));
+    // int recursiveSolution = min(solve(cost, n-1), solve(cost, n-2));
 
+    vector<int> dp(n+1, -1);
+    
+    int ans1 = min(topDownMinimumCost(cost, n-1, dp), topDownMinimumCost(cost, n-2, dp));
 
-    cout<<"Minimum cost to climb the stairs is : "<<recursiveSolution<<endl;
+    cout<<"Minimum cost to climb the stairs is : "<<ans1<<endl;
 
     return 0;
 }
