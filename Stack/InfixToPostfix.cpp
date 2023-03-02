@@ -57,7 +57,8 @@ int main()
 {
     string expression;
     cout<<"Enter the infix expression"<<endl;
-    //a+b*(c^d-e)^(f+g*h)-i.
+    // a+b*(c^d-e)^(f+g*h)-i.
+    // ans : abcd^e-fgh*+^*+i-.
     cin>>expression;
 
     string ans;

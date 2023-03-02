@@ -1,3 +1,6 @@
+ /* In a party of N people, only one person is known to everyone. Such a person may be present at the party, if yes, (s)he doesn’t know anyone at the party. We can only ask questions like “does A know B? “. Find the stranger (celebrity) in the minimum number of questions. */
+ // For approach using stack : Time Complexity : O(n), Space Complexity : O(n).
+ // For two pointer approach : Time Complexity : O(n), Space Complexity : O(1).
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -28,7 +31,7 @@ void twoPointer(vector<vector<int>> &M, int n){
     }
 }
 
-bool knows(vector<vector<int>> M, int a, int b, int n){
+bool knows(vector<vector<int>> &M, int a, int b, int n){
     if(M[a][b] == 1){
         return true;
     }
