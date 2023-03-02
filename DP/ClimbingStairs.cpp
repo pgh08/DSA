@@ -1,4 +1,4 @@
-// Top-Down Approach : Time Complexity : O(n), Space Complexity : O(n).
+// Top-Down Memoization Approach : Time Complexity : O(n), Space Complexity : O(n).
 // Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
 // Space Optimized Approach : Time Complexity : O(n), Space Complexity : O(1).
 #include<bits/stdc++.h>

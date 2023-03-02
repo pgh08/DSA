@@ -1,5 +1,5 @@
 // 1. Rcursive Solution : Time Complexity : O(n^2), Space Complexity : O(n).
-// 2. Top Down Approach : Time Complexity : O(n), Space Complexity : O(n).
+// 2. Top Down Memoization Approach : Time Complexity : O(n), Space Complexity : O(n).
 // 3. Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
 // 4. Space Optimized Approach : TIme Complexity : O(n), Space Complexity : O(1). 
 #include<iostream>

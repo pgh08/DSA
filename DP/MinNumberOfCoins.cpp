@@ -1,10 +1,12 @@
 // Recursive Solution : Time Complexity : O(n), Space Complexity : O(n).
+// Top Down Memoization Approach : Time Complexity : O(n), Space Complexity : O(n).
+// Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
 #include<iostream>
 #include<vector>
 #include<limits.h>
 using namespace std;
 
-int solveRecursive(vector<int> &coins, int n, int targetAmount){
+int solveRecursive(vector<int> &coins, int targetAmount){
     // Base Case.
     if(targetAmount == 0){
         return 0;
@@ -16,13 +18,58 @@ int solveRecursive(vector<int> &coins, int n, int targetAmount){
     int mini = INT_MAX;
 
     for(auto val : coins){
-        int ans = solveRecursive(coins, n, targetAmount-val);
+        int ans = solveRecursive(coins, targetAmount-val);
 
         if(ans != INT_MAX){
             mini = min(mini, 1+ans);
         }
     }
     return mini;
+}
+
+int solveTopDownMemo(vector<int> &coins, int targetAmount, vector<int> &dp){
+    //Base Case.
+    if(targetAmount == 0){
+        return 0;
+    }
+    if(targetAmount < 0){
+        return INT_MAX;
+    }
+    if(dp[targetAmount] != -1){
+        return dp[targetAmount];
+    }
+
+    int mini = INT_MAX;
+
+    for(auto val : coins){
+        int ans = solveTopDownMemo(coins, targetAmount-val, dp);
+
+        if(ans != INT_MAX){
+            mini = min(mini,1+ans);
+        }
+    }
+    dp[targetAmount] = mini;
+
+    return mini;
+}
+
+int solveBottomUp(vector<int> &coins, int targetAmount, int n){
+    // All the elements are set to INT_MAX because all worst all child's amount can be less than zero.
+    vector<int> dp(targetAmount+1, INT_MAX);
+    // Resolving Base Case.
+    dp[0] = 0;
+
+    // Outer Loop equivalent to recursive call in top down approach which keeps track of the amount.
+    for(int amount=0; amount<=targetAmount; amount++){
+        // Inner Loop is used because for each amount there will be coins.size() number of possible choices of coin.
+        for(auto coinVal : coins){
+            // To avoid int overflow when dp[amount-coinval] = INT_MAX becuase we do 1+dp[amount-coinval] and also to if amount-coinVal is less than zero array index cannot be accessed.
+            if((amount-coinVal >= 0) && (dp[amount-coinVal] != INT_MAX)){
+                dp[amount] = min(dp[amount],1+dp[amount-coinVal]);
+            }
+        }
+    }
+    return dp[targetAmount];
 }
 
 int main()
@@ -41,9 +88,23 @@ int main()
     cout<<"Enter the target amount"<<endl;
     cin>>targetAmount;
 
-    int ans1 = solveRecursive(coins, n, targetAmount);
+    // Recursive Solution.
+    // int ans1 = solveRecursive(coins, targetAmount);
 
-    cout<<"Minimum number of coins requires is : "<<ans1<<endl;
+    // Top Down Memoization Approach.
+    // vector<int> dp(targetAmount+1, -1);
+    // int ans2 = solveTopDownMemo(coins, targetAmount, dp);
+
+    // Bottom Up Approach.
+    int ans3 = solveBottomUp(coins, targetAmount, n);
+
+
+    if(ans3 != INT_MAX){
+        cout<<"Minimum number of coins requires is : "<<ans3<<endl;
+    }
+    else{
+        cout<<"Not Possible"<<endl;
+    }
 
     return 0;
 }
