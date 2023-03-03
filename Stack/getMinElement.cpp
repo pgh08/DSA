@@ -36,7 +36,7 @@ class Stack{
             }
             else{
                 prevmini = mini;
-                int value = 2*mini - curr;
+                int value = 2*mini-curr;
                 mini = value;
                 return prevmini;
             }

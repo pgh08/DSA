@@ -27,7 +27,7 @@ vector<int> negativeInK(vector<int> nums, int n, int k){
         if(nums[i] < 0){
             dq.push_back(i);
         }
-        //Answer storing.
+        //Storing answer.
         if(dq.size() > 0){
             res.push_back(nums[dq.front()]);
         }
@@ -35,12 +35,13 @@ vector<int> negativeInK(vector<int> nums, int n, int k){
             res.push_back(0);
         }
     }
+    // cout<<dq.front()<<endl;
     return res;
 }
 
 int main()
 {
-    vector<int> nums = {-8,2,3,-6,10};
+    vector<int> nums = {-8,2,3,-6,10}; // ans : -8, 0, -6, -6.
     int k;
     cout<<"Enter the value of K"<<endl;
     cin>>k;
