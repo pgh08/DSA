@@ -1,67 +1,30 @@
 #include<iostream>
-#include<queue>
-#include<vector>
 using namespace std;
 
-vector<int> getNegativeInK(vector<int> &nums, int k, int n){
-    deque<int> dq;
-    vector<int> res;
+int main()
+{
+    int petrol[4] = {4,6,7,4};
+    int distance[4] = {6,5,3,5};
 
-    for(int i=0; i<k; i++){
-        if(nums[i] < 0){
-            dq.push_back(i);
+    int balance = 0;
+    int defict = 0;
+    int start = 0;
+
+    for(int i=0; i<4; i++){
+        balance += petrol[i] - distance[i];
+        if(balance < 0){
+            defict += balance;
+            start = i+1;
+            balance = 0;
         }
     }
 
-    if(dq.size() > 0){
-        res.push_back(nums[dq.front()]);
+    if(balance >= 0){
+        cout<<"Starting Point is : "<<start<<endl;
     }
     else{
-        res.push_back(0);
+        cout<<"Not Possible"<<endl;
     }
-
-    for(int i=k; i<n; i++){
-        if(!dq.empty() && i-dq.front() >= k){
-            dq.pop_front();
-        }
-
-        if(nums[i] < 0){
-            dq.push_back(i);
-        }
-
-        if(dq.size() > 0){
-            res.push_back(nums[dq.front()]);
-        }
-        else{
-            res.push_back(0);
-        }
-    }
-    return res;
-}
-
-int main()
-{   
-    int n;
-    cout<<"Enter the size of array"<<endl;
-    cin>>n;
-
-    vector<int> nums(n);
-
-    for(int i=0; i<n; i++){
-        cin>>nums[i];
-    }
-
-    int k; 
-    cout<<"Enter the value of K :"<<endl;
-    cin>>k;
-
-    vector<int> ans = getNegativeInK(nums, k, n);
-    int len = ans.size();
-
-    for(int i=0; i<len; i++){
-        cout<<ans[i]<<" ";
-    }
-    cout<<endl;
 
     return 0;
 }

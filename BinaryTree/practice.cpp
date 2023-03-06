@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stack>
 #include<queue>
 using namespace std;
 
@@ -7,7 +8,7 @@ class TreeNode{
         int data;
         TreeNode* left;
         TreeNode* right;
-
+    
     TreeNode(int d){
         this->data = d;
         this->left = nullptr;
@@ -41,66 +42,96 @@ void lvlOrderTraversal(TreeNode* root){
     q.push(nullptr);
 
     while(!q.empty()){
-        TreeNode* temp = q.front();
+        TreeNode* front = q.front();
         q.pop();
 
-        if(temp == nullptr){
+        if(front == nullptr){
             cout<<endl;
             if(!q.empty()){
                 q.push(nullptr);
             }
         }
         else{
-            cout<<temp->data<<" ";
+            cout<<front->data<<" ";
 
-            if(temp->left){
-                q.push(temp->left);
+            if(front->left){
+                q.push(front->left);
             }
-            if(temp->right){
-                q.push(temp->right);
+            
+            if(front->right){
+                q.push(front->right);
             }
         }
     }
 }
 
-pair<bool,int> fastBalance(TreeNode* root){
-    if(root == nullptr){
-        return {true,0};
-    }
-    pair<bool,int> leftAns = fastBalance(root->left);
-    pair<bool,int> rightAns = fastBalance(root->right);
-    bool diff = abs(leftAns.second - rightAns.second) <= 1;
+void Inorder(TreeNode* root){
+    // Base Case.
+    // if(root == nullptr){
+    //     return;
+    // }
+    // Inorder(root->left);
+    // cout<<root->data<<" ";
+    // Inorder(root->right);
 
-    pair<bool,int> ans;
-    ans.second = max(leftAns.second, rightAns.second) + 1;
+    stack<TreeNode*> st;
+    TreeNode* curr = root;
 
-    if(leftAns.first && rightAns.first && diff){
-        ans.first = true;
+    while(curr != nullptr || st.empty() == false){
+        while(curr != nullptr){
+            st.push(curr);
+            curr = curr->left;
+        }
+
+        curr = st.top();
+        st.pop();
+
+        cout<<curr->data<<" ";
+        curr = curr->right;
     }
-    else{
-        ans.first = false;
-    }
-    return ans;
+    cout<<endl;
 }
 
-bool isBalancedTree(TreeNode* root){
-    return fastBalance(root).first;
+void Preorder(TreeNode* root){
+    // Base Case.
+    if(root == nullptr){
+        return;
+    }
+    cout<<root->data<<" ";
+    Preorder(root->left);
+    Preorder(root->right);
+}
+
+void Postorder(TreeNode* root){
+    // Base Case.
+    if(root == nullptr){
+        return;
+    }
+    Postorder(root->left);
+    Postorder(root->right);
+    cout<<root->data<<" ";
 }
 
 int main()
 {
     TreeNode* root = nullptr;
-    //1 2 3 -1 -1 4 -1 -1 -1.
+    // 1 2  3 -1 -1 4 -1 -1 5 6 -1 -1 7 -1 -1.
     root = buildTree(root);
 
+    cout<<"Level Order Traversal is :"<<endl;
     lvlOrderTraversal(root);
 
-    if(isBalancedTree(root)){
-        cout<<"Tree is balanced"<<endl;
-    }
-    else{
-        cout<<"Tree is not balanced"<<endl;
-    }
+    cout<<"Inorder Traversal is :"<<endl;
+    Inorder(root);
+    cout<<endl;
+
+    cout<<"Preorder Traversal is :"<<endl;
+    Preorder(root);
+    cout<<endl;
+
+    cout<<"Postorder Traversal is :"<<endl;
+    Postorder(root);
+    cout<<endl;
 
     return 0;
 }

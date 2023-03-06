@@ -3,14 +3,14 @@ using namespace std;
 
 int main()
 {
-    int petrol[5] = {4,6,7,4};
-    int distance[5] = {6,5,3,5};
+    int petrol[4] = {4,6,7,4};
+    int distance[4] = {6,5,3,5};
 
     int defict = 0;
     int balance = 0;
     int start = 0;
 
-    for(int i=0; i<5; i++){
+    for(int i=0; i<4; i++){
         balance += petrol[i] - distance[i];
         if(balance < 0){
             defict += balance;

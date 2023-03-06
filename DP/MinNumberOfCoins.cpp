@@ -1,6 +1,6 @@
-// Recursive Solution : Time Complexity : O(n), Space Complexity : O(n).
-// Top Down Memoization Approach : Time Complexity : O(n), Space Complexity : O(n).
-// Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
+// Recursive Solution : Time Complexity : O(amount^2), Space Complexity : O(amount).
+// Top Down Memoization Approach : Time Complexity : O(amount*n), Space Complexity : O(amount).
+// Bottom Up Approach : Time Complexity : O(amount*n), Space Complexity : O(amount).
 #include<iostream>
 #include<vector>
 #include<limits.h>
