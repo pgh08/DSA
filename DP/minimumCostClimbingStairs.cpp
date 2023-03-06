@@ -1,3 +1,4 @@
+// Given the number of stairs and cost for climbing each stair find the minimum cost using which we can reach the top.
 // 1. Rcursive Solution : Time Complexity : O(n^2), Space Complexity : O(n).
 // 2. Top Down Memoization Approach : Time Complexity : O(n), Space Complexity : O(n).
 // 3. Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).

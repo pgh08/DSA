@@ -1,3 +1,4 @@
+// Given a number of stairs, find the minmum number of ways in which we can reach the top if we are allowed to climb 1 or 2 stairs at each jump.
 // Top-Down Memoization Approach : Time Complexity : O(n), Space Complexity : O(n).
 // Bottom Up Approach : Time Complexity : O(n), Space Complexity : O(n).
 // Space Optimized Approach : Time Complexity : O(n), Space Complexity : O(1).

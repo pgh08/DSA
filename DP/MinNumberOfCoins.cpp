@@ -1,3 +1,4 @@
+// Given the array of types of coins available and targetsum. Find the minimum number of coins required to make the targetsum.
 // Recursive Solution : Time Complexity : O(amount^2), Space Complexity : O(amount).
 // Top Down Memoization Approach : Time Complexity : O(amount*n), Space Complexity : O(amount).
 // Bottom Up Approach : Time Complexity : O(amount*n), Space Complexity : O(amount).
@@ -88,7 +89,7 @@ int main()
     cout<<"Enter the target amount"<<endl;
     cin>>targetAmount;
 
-    // Recursive Solution.
+    // Recursive Approach.
     // int ans1 = solveRecursive(coins, targetAmount);
 
     // Top Down Memoization Approach.
