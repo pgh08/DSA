@@ -81,5 +81,7 @@ int main()
     //Answer should be 3 4 1 5 2 0.
     Postorder(root);
 
+    cout<<endl;
+
     return 0;
 }
