@@ -1,6 +1,5 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
 using namespace std;
 
 class TreeNode{
@@ -14,94 +13,67 @@ class TreeNode{
         this->left = nullptr;
         this->right = nullptr;
     }
-
-    ~TreeNode(){}
 };
 
 TreeNode* buildTree(TreeNode* root){
-    int data;
+    int value;
     cout<<"Enter the data"<<endl;
-    cin>>data;
-    root = new TreeNode(data);
+    cin>>value;
+    root = new TreeNode(value);
 
-    if(data == -1){
+    if(value == 0){
         return nullptr;
     }
 
-    cout<<"Enter the data for left of "<<root->data<<endl;
+    cout<<"Enter the data for the left of "<<root->data<<endl;
     root->left = buildTree(root->left);
-    cout<<"Enter the data for right of "<<root->data<<endl;
+    cout<<"Enter the data for the right of "<<root->data<<endl;
     root->right = buildTree(root->right);
 
     return root;
 }
 
-void createMapping(vector<int> &Inorder, int n, unordered_map<int,int> &inorderValueToIndex){
-    for(int i=0; i<n; i++){
-        inorderValueToIndex[Inorder[i]] = i;
-    }
-}
-
-TreeNode* buildFromInorderPreorder(TreeNode* root, vector<int> &Inorder, vector<int> &Preoder, unordered_map<int,int> &inorderValueToIndex, int &preoderIndex, int inoderIndexStart, 
-int inorderIndexEnd, int n){
-    // Base Case.
-    if(preoderIndex >= n || inoderIndexStart > inorderIndexEnd){
-        return nullptr;
-    }
-
-    int element = Preoder[preoderIndex++];
-    
-    root = new TreeNode(element);
-
-    int pos = inorderValueToIndex[element];
-    
-    root->left = buildFromInorderPreorder(root->left, Inorder, Preoder, inorderValueToIndex, preoderIndex, inoderIndexStart, pos-1, n);
-    root->right = buildFromInorderPreorder(root->right, Inorder, Preoder, inorderValueToIndex, preoderIndex, pos+1, inorderIndexEnd, n);
-
-    return root;
-}
-
-void Postorder(TreeNode* root){
+void getKSumPaths(TreeNode* root, vector<int> &path, vector<vector<int>> &ans, int &count, int k){
     // Base Case.
     if(root == nullptr){
         return;
     }
-    Postorder(root->left);
-    Postorder(root->right);
-    cout<<root->data<<" ";
+
+    path.push_back(root->data);
+    getKSumPaths(root->left, path, ans, count, k);
+    getKSumPaths(root->right, path, ans, count, k);
+
+    int size = path.size() - 1;
+    vector<int> temp;
+    int sum = 0;
+
+    for(int i=size; i>=0; i--){
+        temp.push_back(path[i]);
+        sum += path[i];
+        if(sum == k){
+            count++;
+            ans.push_back(temp);
+        }
+    }
+    // Backtracking.
+    path.pop_back();
 }
 
 int main()
 {
-    int n;
-    cout<<"Enter the size of the vector"<<endl;
-    cin>>n;
-
-    vector<int> Inorder(n), Preorder(n);
-    cout<<"Enter the data for Inorder Array"<<endl;
-
-    for(int i=0; i<n; i++){
-        cin>>Inorder[i];
-    }
-
-    cout<<"Enter the data for Preorder Array"<<endl;
-
-    for(int i=0; i<n; i++){
-        cin>>Preorder[i];
-    }
-
     TreeNode* root = nullptr;
-    // root = buildTree(root);
+    // 
+    root = buildTree(root);
 
-    int preoderIndex = 0;
-    int inorderIndexStart = 0, inorderIndexEnd = n;
+    int count = 0;
+    vector<int> path;
+    vector<vector<int>> ans;
 
-    unordered_map<int,int> inorderValueToIndex;
-    createMapping(Inorder, n, inorderValueToIndex);
-    
-    root = buildFromInorderPreorder(root, Inorder, Preorder, inorderValueToIndex, preoderIndex, inorderIndexStart, inorderIndexEnd, n);
+    int k;
+    cout<<"Enter the value of target K"<<endl;
+    cin>>k;
 
-    Postorder(root);
+
 
     return 0;
 }

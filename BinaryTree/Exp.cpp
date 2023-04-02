@@ -27,9 +27,9 @@ node* node :: buildTree(node* root){
 } */
 
 node :: node(){
-    cout<<"Fuck this"<<endl;
+    cout<<"This is an experiment"<<endl;
 }
 
 void node :: fuckme(){
-    cout<<"Fuck"<<endl;
+    cout<<"This is it"<<endl;
 }
