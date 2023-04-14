@@ -1,5 +1,5 @@
 #include<iostream>
-#include<vector>
+#include<limits.h>
 using namespace std;
 
 class TreeNode{
@@ -13,6 +13,8 @@ class TreeNode{
         this->left = nullptr;
         this->right = nullptr;
     }
+
+    ~TreeNode(){}
 };
 
 TreeNode* buildTree(TreeNode* root){
@@ -21,7 +23,7 @@ TreeNode* buildTree(TreeNode* root){
     cin>>value;
     root = new TreeNode(value);
 
-    if(value == 0){
+    if(value == -1){
         return nullptr;
     }
 
@@ -33,30 +35,23 @@ TreeNode* buildTree(TreeNode* root){
     return root;
 }
 
-void getKSumPaths(TreeNode* root, vector<int> &path, vector<vector<int>> &ans, int &count, int k){
+void getMaxLenSum(TreeNode* root, int &sum, int len, int &maxLen, int &maxSum){
     // Base Case.
     if(root == nullptr){
+        if(len > maxLen){
+            maxLen = len;
+            maxSum = sum;
+        }
+        else if(len == maxLen){
+            maxSum = max(sum, maxSum);
+        }
         return;
     }
 
-    path.push_back(root->data);
-    getKSumPaths(root->left, path, ans, count, k);
-    getKSumPaths(root->right, path, ans, count, k);
+    sum += root->data;
 
-    int size = path.size() - 1;
-    vector<int> temp;
-    int sum = 0;
-
-    for(int i=size; i>=0; i--){
-        temp.push_back(path[i]);
-        sum += path[i];
-        if(sum == k){
-            count++;
-            ans.push_back(temp);
-        }
-    }
-    // Backtracking.
-    path.pop_back();
+    getMaxLenSum(root->left, sum, len+1, maxLen, maxSum);
+    getMaxLenSum(root->right, sum, len+1, maxLen, maxSum);
 }
 
 int main()
@@ -65,15 +60,14 @@ int main()
     // 
     root = buildTree(root);
 
-    int count = 0;
-    vector<int> path;
-    vector<vector<int>> ans;
+    int sum = 0;
+    int len = 0;
+    int maxLen = 0;
+    int maxSum = INT_MIN;
 
-    int k;
-    cout<<"Enter the value of target K"<<endl;
-    cin>>k;
+    getMaxLenSum(root, sum, len, maxLen, maxSum);
 
-
+    cout<<"Maximum lenght brach sum of a Tree is : "<<maxSum<<endl;
 
     return 0;
 }

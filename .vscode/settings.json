@@ -3,6 +3,11 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "chrono": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "ranges": "cpp",
+        "span": "cpp"
     }
 }
