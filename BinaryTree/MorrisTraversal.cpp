@@ -1,26 +1,28 @@
 #include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
 
-class node{
+class TreeNode{
     public:
         int data;
-        node* left;
-        node* right;
+        TreeNode* left;
+        TreeNode* right;
 
-    node(int d){
+    TreeNode(int d){
         this->data = d;
         this->left = NULL;
         this->right = NULL;
     }
 
-    ~node(){}
+    ~TreeNode(){}
 };
 
-node* buildTree(node* root){
+TreeNode* buildTree(TreeNode* root){
     int data;
     cout<<"Enter the data"<<endl;
     cin>>data;
-    root = new node(data);
+    root = new TreeNode(data);
 
     if(data == -1){
         return NULL;
@@ -35,9 +37,39 @@ node* buildTree(node* root){
     return root;
 }
 
-void MorrisTraversal(node* root){
-    node* curr = root;
-    node* predecessor = NULL;
+// Morris Preorder Traversal.
+void MorrisPreorderTraversal(TreeNode* root){
+    TreeNode* curr = root;
+    TreeNode* predecessor = NULL;
+
+    while(curr != NULL){
+        if(curr->left == NULL){
+            cout<<curr->data<<" ";
+            curr = curr->right;
+        }
+        else{
+            predecessor = curr->left;
+            while(predecessor->right != NULL && predecessor->right != curr){
+                predecessor = predecessor->right;
+            }
+
+            if(predecessor->right == NULL){
+                cout<<curr->data<<" ";
+                predecessor->right = curr;
+                curr = curr->left;
+            }
+            else{
+                predecessor->right = NULL;
+                curr = curr->right;
+            }
+        }
+    }
+}
+
+// Morris Inorder Traversal.
+void MorrisInorderTraversal(TreeNode* root){
+    TreeNode* curr = root;
+    TreeNode* predecessor = NULL;
     while(curr != NULL){
         if(curr->left == NULL){
             cout<<curr->data<<" ";
@@ -62,13 +94,61 @@ void MorrisTraversal(node* root){
     }
 }
 
+vector<int> MorrisPostOrderTraversal(TreeNode* root){
+    TreeNode* curr = root;
+    TreeNode* predecessor = NULL;
+    vector<int> postOrder;
+
+    while(curr != NULL){
+        if(curr->right == NULL){
+            postOrder.push_back(curr->data);
+            curr = curr->left;
+        }
+        else{
+            predecessor = curr->right;
+            while(predecessor->left != NULL && predecessor->left != curr){
+                predecessor = predecessor->left;
+            }
+
+            if(predecessor->left == NULL){
+                postOrder.push_back(curr->data);
+                predecessor->left = curr;
+                curr = curr->right;
+            }
+            else{
+                predecessor->left = NULL;
+                curr = curr->left;
+            }
+        }
+    }
+    return postOrder;
+}
+
+void print(vector<int> &postOrder){
+    for(auto x : postOrder){
+        cout<<x<<" ";
+    }
+    cout<<endl;
+}
+
 int main()
 {
-    node* root = NULL;
+    TreeNode* root = NULL;
     //1 2 4 -1 7 -1 -1 5 -1 -1 3 -1 6 -1 -1.
     root = buildTree(root);
 
-    MorrisTraversal(root);
+    // Inorder.
+    // MorrisInorderTraversal(root);
+
+    // Preorder.
+    // MorrisPreorderTraversal(root);
+
+    // Postorder.
+    vector<int> postOrder = MorrisPostOrderTraversal(root);
+
+    reverse(postOrder.begin(), postOrder.end());
+
+    print(postOrder);
 
     return 0;
 }

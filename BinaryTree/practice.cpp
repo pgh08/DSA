@@ -1,5 +1,5 @@
 #include<iostream>
-#include<limits.h>
+#include<queue>
 using namespace std;
 
 class TreeNode{
@@ -13,17 +13,15 @@ class TreeNode{
         this->left = nullptr;
         this->right = nullptr;
     }
-
-    ~TreeNode(){}
 };
 
 TreeNode* buildTree(TreeNode* root){
-    int value;
+    int val;
     cout<<"Enter the data"<<endl;
-    cin>>value;
-    root = new TreeNode(value);
+    cin>>val;
+    root = new TreeNode(val);
 
-    if(value == -1){
+    if(val == -1){
         return nullptr;
     }
 
@@ -35,39 +33,43 @@ TreeNode* buildTree(TreeNode* root){
     return root;
 }
 
-void getMaxLenSum(TreeNode* root, int &sum, int len, int &maxLen, int &maxSum){
-    // Base Case.
-    if(root == nullptr){
-        if(len > maxLen){
-            maxLen = len;
-            maxSum = sum;
+void lvlOrderTraversal(TreeNode* root){
+    queue<TreeNode*> q;
+    q.push(root);
+    q.push(nullptr);
+
+    while(!q.empty()){
+        TreeNode* front = q.front();
+        q.pop();
+
+        if(front == nullptr){
+            cout<<endl;
+
+            if(!q.empty()){
+                q.push(nullptr);
+            }
         }
-        else if(len == maxLen){
-            maxSum = max(sum, maxSum);
+        else{
+            cout<<front->data<<" ";
+
+            if(front->left){
+                q.push(front->left);
+            }
+
+            if(front->right){
+                q.push(front->right);
+            }
         }
-        return;
     }
-
-    sum += root->data;
-
-    getMaxLenSum(root->left, sum, len+1, maxLen, maxSum);
-    getMaxLenSum(root->right, sum, len+1, maxLen, maxSum);
 }
 
 int main()
 {
     TreeNode* root = nullptr;
-    // 
+    // 1 2 3 -1 -1 4 -1 -1 5 6 -1 -1 7 -1 -1.
     root = buildTree(root);
 
-    int sum = 0;
-    int len = 0;
-    int maxLen = 0;
-    int maxSum = INT_MIN;
-
-    getMaxLenSum(root, sum, len, maxLen, maxSum);
-
-    cout<<"Maximum lenght brach sum of a Tree is : "<<maxSum<<endl;
+    lvlOrderTraversal(root);
 
     return 0;
 }

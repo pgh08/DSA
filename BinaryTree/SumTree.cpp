@@ -1,20 +1,20 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
 
-class node{
+class TreeNode{
     public:
         int data;
-        node* left;
-        node* right;
-    node(int d){
+        TreeNode* left;
+        TreeNode* right;
+    TreeNode(int d){
         this->data = d;
         this->left = NULL;
         this->right = NULL;
     }
-    ~node(){}
+    ~TreeNode(){}
 };
 
-pair<bool,int> fastSum(node* root){
+pair<bool,int> fastSum(TreeNode* root){
     //Base case.
     if(root == NULL){
         pair<bool,int> p = make_pair(true,0);
@@ -45,16 +45,16 @@ pair<bool,int> fastSum(node* root){
     return ans;
 }
 
-bool isSum(node* root){
+bool isSum(TreeNode* root){
     return fastSum(root).first;
 }
 
 int main()
 {
-    node* root =  new node(3);
-    root->left = new node(1);
-    root->right = new node(1);
-    root->right->right = new node(1);
+    TreeNode* root =  new TreeNode(3);
+    root->left = new TreeNode(1);
+    root->right = new TreeNode(1);
+    root->right->right = new TreeNode(1);
     root->left->left = root->left->right = NULL;
     root->right->right->left = root->right->right->right = NULL;
 
