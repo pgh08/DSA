@@ -10,7 +10,6 @@ string getkey(string s){
     for(int i=0; i<26; i++){
         key.append(to_string(count[i]) + 'a');
     }
-    cout<<key<<endl;
     return key;
 }
 
@@ -34,6 +33,7 @@ int main()
         for(int j=0; j<ans[i].size(); j++){
             cout<<ans[i][j]<<" ";
         }
+        cout<<endl;
     }
 
     return 0;
