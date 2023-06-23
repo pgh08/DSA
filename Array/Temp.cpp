@@ -1,37 +1,40 @@
 #include<iostream>
+#include<map>
 #include<vector>
+#include<algorithm>
 using namespace std;
+
+bool compare(pair<int,int> a, pair<int,int> b){
+    if(a.second == b.second){
+        return a.first < b.first;
+    }
+    return a.second < b.second;
+}
 
 int main()
 {
-    int n;
-    cout<<"Enter the number of elements in the array"<<endl;
-    cin>>n;
+    vector<int> nums = {1, 2, 2, 4, 4, 3, 10, 4, 5};
+    map<int,int> omap;
 
-    vector<int> nums(n);
-    cout<<"Enter the array elements seperated by space"<<endl;
-    for(int i=0; i<n; i++){
-        cin>>nums[i];
+    for(int i=0; i<nums.size(); i++){
+        omap[nums[i]]++;
     }
 
-    vector<int> left(n), right(n), ans(n);
-    left[0] = 1;
-    right[n-1] = 1;
+    vector<pair<int,int>> ans;
 
-    for(int i=1; i<n; i++){
-        left[i] = left[i-1] * nums[i-1];
+    for(auto pr: omap){
+        ans.push_back(pr);
     }
 
-    for(int i=n-2; i>=0; i--){
-        right[i] = right[i+1] * nums[i+1];
-    }
+    sort(ans.begin(), ans.end(), compare);
 
-    for(int i=0; i<n; i++){
-        ans[i] = left[i] * right[i];
-    }
+    for(int i=0; i<ans.size(); i++){
+        int j = 0;
 
-    for(int i=0; i<n; i++){
-        cout<<ans[i]<<" ";
+        while(j < ans[i].second){
+            cout<<ans[i].first<<" ";
+            j++;
+        }
     }
     cout<<endl;
 
