@@ -61,7 +61,7 @@ int kthSmallestBySort(int *arr, int k, int n){
 int main()
 {
     int n = 6;
-    int arr[n] = {7,7,20,10,3,15};
+    int arr[6] = {7,7,20,10,3,15};
 
     int k;
     cout<<"Enter the value of k"<<endl;
