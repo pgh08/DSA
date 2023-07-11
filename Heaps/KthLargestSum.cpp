@@ -43,7 +43,7 @@ int main()
     makeSum(nums, Sumstore, n);*/
 
     int K;
-    cout<<"Enter the K'th largest element"<<endl;
+    cout<<"Enter the value of K"<<endl;
     cin>>K;
 
     /*//Step 2 :
