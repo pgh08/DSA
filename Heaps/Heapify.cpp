@@ -29,7 +29,7 @@ void heapify(int arr[], int n, int i){
 
 int main()
 {
-    int arr[6] = {-1,54,53,55,52,50};
+    int arr[6] = {-1,4,1,3,9,7};
     int n = 6-1;
 
     for(int i=n/2; i>0; i--){

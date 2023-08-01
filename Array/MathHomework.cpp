@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
 
 void findBinary(int *arr, int s, int e, int key, int &ans){
@@ -8,7 +8,7 @@ void findBinary(int *arr, int s, int e, int key, int &ans){
             ans = mid;
             return;
         }
-        if(arr[mid] >= key){
+        if(arr[mid] > key){
             ans = min(ans,mid);
             e = mid -1;
         }
