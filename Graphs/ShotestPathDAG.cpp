@@ -66,6 +66,8 @@ int main()
         int top = st.top();
         st.pop();
 
+        cout<<top<<endl;
+
         if(distance[top] != INT_MAX){
             for(auto i : adjList[top]){
                 if((distance[top] + i.second) < distance[i.first]){

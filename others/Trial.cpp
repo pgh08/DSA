@@ -1,52 +1,24 @@
-#include <bits/stdc++.h>
+#include<iostream>
 using namespace std;
-
-void pattern(int n){
-    int i = 1;
-
-    while(i <= n){
-        int temp = i-1;
-        while(temp > 0){
-            cout<<" ";
-            temp--;
-        }
-        cout<<i;
-        int j = (n-i)*2-1;
-        while(j > 0){
-            cout<<" ";
-            j--;
-        }
-        if(i < n){
-            cout<<i;
-        }
-        cout<<endl;
-        i++;
-    }
-    i = 1;
-    while(i < n){
-        int j = n-i-1;
-        while(j > 0){
-            cout<<" ";
-            j--;
-        }
-        cout<<n-i;
-        int k = (i)*2-1;
-        while(k > 0){
-            cout<<" ";
-            k--;
-        }
-        cout<<n-i;
-        cout<<endl;
-        i++;
-    }
-}
 
 int main()
 {
-    int n;
-    cin>>n;
-    
-    pattern(n);
+    int arr[10] = {20,32,323,2,1,435,5,32,43,50};
+    int minIndex;
+    for(int i=0; i<10; i++){
+        minIndex = i;
+        for(int j=i+1; j<10; j++){
+            if(arr[minIndex] > arr[j]){
+                minIndex = j;
+            }
+        }
+        swap(arr[minIndex], arr[i]);
+    }
+
+    for(auto i : arr){
+        cout<<i<<" ";
+    }
+    cout<<endl;
 
     return 0;
 }

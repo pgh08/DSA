@@ -28,25 +28,25 @@ void solveMaze(int x, int y, vector<vector<int>> maze, int n, string path, vecto
     }
     visited[x][y] = true;
     //First movement.
-    //Down. For Down movement 'x' co-ordinate varies and 'y' co-ordinate remains the same.
+    //Down. For down movement 'x' co-ordinate varies and 'y' co-ordinate remains the same.
     if(isSafe(x+1, y, maze, visited, n)){
         solveMaze(x+1, y, maze, n, path + 'D', ans, visited);        
     }
 
     //Second movement.
-    //Left. For Down movement 'x' co-ordinate remains the same and 'y' co-ordinate varies.
+    //Left. For left movement 'x' co-ordinate remains the same and 'y' co-ordinate varies.
     if(isSafe(x, y-1, maze, visited, n)){
         solveMaze(x, y-1, maze, n, path + 'L', ans, visited); 
     }
 
     //Third movement.
-    //Right. For Down movement 'x' co-ordinate remains the same and 'y' co-ordinate varies.
+    //Right. For right movement 'x' co-ordinate remains the same and 'y' co-ordinate varies.
     if(isSafe(x, y+1, maze, visited, n)){
         solveMaze(x, y+1, maze, n, path + 'R', ans, visited); 
     }
 
     //Fourth movement.
-    //Up. For Down movement 'x' co-ordinate varies and 'y' co-ordinate remains the same.
+    //Up. For up movement 'x' co-ordinate varies and 'y' co-ordinate remains the same.
     if(isSafe(x-1, y, maze, visited, n)){
         solveMaze(x-1, y, maze, n, path + 'U', ans, visited); 
     }

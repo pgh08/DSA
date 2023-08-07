@@ -1,96 +1,73 @@
 #include<iostream>
+#include<vector>
+#include<stack>
 using namespace std;
 
-class TwoStack{
-    public:
-        int size;
-        int top1;
-        int top2;
-        int *arr;
+vector<int> nextSmallerHeight(vector<int> &heights, int n){
+    stack<int> st;
+    st.push(-1);
+    vector<int> ans(n);
 
-    TwoStack(int s){
-        this->size = s;
-        this->top1 = -1;
-        this->top2 = size;
-        this->arr = new int[s];
+    for(int i=n-1; i>=0; i--){
+        int curr = heights[i];
+        while(st.top() != -1 && heights[st.top()] >= curr){
+            st.pop();
+        }
+
+        ans[i] = st.top();
+        st.push(i);
     }
 
-    void push1(int data){
-        if(top2 - top1 > 1){
-            top1++;
-            arr[top1] = data;
-        }
-        else{
-            cout<<"Stack Overflow"<<endl;
-        }
-    }
+    return ans;
+}
 
-    void push2(int data){
-        if(top2 - top1 > 1){
-            top2--;
-            arr[top2] = data;
-        }
-        else{
-            cout<<"Stack Overflow"<<endl;
-        }
-    }
+vector<int> prevSmallerHeight(vector<int> &heights, int n){
+    stack<int> st;
+    st.push(-1);
+    vector<int> ans(n);
 
-    int pop1(){
-        if(top1 >= 0){
-            int top = arr[top1];
-            top1--;
-            return top;
+    for(int i=0; i<n; i++){
+        int curr = heights[i];
+        while(st.top() != -1 && heights[st.top()] >= curr){
+            st.pop();
         }
-        else{
-            cout<<"Stack Underflow"<<endl;
-        }
-        return -1;
+        ans[i] = st.top();
+        st.push(i);
     }
-
-    int pop2(){
-        if(top2 < size){
-            int top = arr[top2];
-            top2++;
-            return top;
-        }
-        else{
-            cout<<"Stack Underflow"<<endl;
-        }
-        return -1;
-    }
-
-    bool isEmpty(){
-        if(top1 == -1 && top2 == size){
-            return true;
-        }
-        return false;
-    }
-};
+    return ans;
+}
 
 int main()
 {
-    TwoStack ts(5);
+    int n;
+    cout<<"Enter the size of array"<<endl;
+    cin>>n;
 
-    if(ts.isEmpty()){
-        cout<<"Stack is empty"<<endl;
+    cout<<"Enter the heights"<<endl;
+    vector<int> heights(n);
+    for(int i=0; i<n; i++){
+        cin>>heights[i];
     }
-    else{
-        cout<<"Stack is not empty"<<endl;
+
+    vector<int> next = nextSmallerHeight(heights, n);
+    vector<int> prev = prevSmallerHeight(heights, n);
+
+    int area = 0;
+
+    for(int i=0; i<n; i++){
+        int length = heights[i];
+
+        if(next[i] == -1){
+            next[i] = n;
+        }
+
+        int breadth = next[i] - prev[i] - 1;
+        int eachArea = length*breadth;
+
+        area = max(eachArea, area);
     }
 
-    ts.push1(10);
-    ts.push1(9);
-    ts.push2(8);
-    ts.push2(7);
-    ts.push2(6);
-    ts.push1(5);
-
-    cout<<ts.pop1()<<" "<<ts.pop2()<<endl;
-    ts.pop1();
-    ts.pop1();
-    ts.pop2();
-    ts.pop2();
-    ts.pop2();
+    cout<<"Max area is : "<<area<<endl;
 
     return 0;
 }

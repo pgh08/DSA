@@ -40,7 +40,6 @@ class Stack{
                 mini = value;
                 return prevmini;
             }
-            return prevmini;
         }
 
         int top(){

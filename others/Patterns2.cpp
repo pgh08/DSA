@@ -72,7 +72,7 @@ void pattern15(int n){
             k--;
         }
         int j = 0;
-        while (j < i){
+        while (j <= i){
             cout<<"*";
             j++;
         }

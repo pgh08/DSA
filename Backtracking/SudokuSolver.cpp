@@ -93,13 +93,14 @@ int main()
     }
     cout<<endl;
     findSudoku(sudoku, n);
-        //Printing the sudoku.
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                cout<<sudoku[i][j]<<" ";
-            }
-            cout<<endl;
+    
+    //Printing the sudoku.
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            cout<<sudoku[i][j]<<" ";
         }
+        cout<<endl;
+    }
 
     return 0;
 }
