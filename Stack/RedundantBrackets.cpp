@@ -38,6 +38,9 @@ bool redundant(string s){
             }
         }
     }
+    if(!st.empty()){
+        return true;
+    }
     return false;
 }
 

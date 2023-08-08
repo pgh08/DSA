@@ -1,73 +1,46 @@
 #include<iostream>
-#include<vector>
 #include<stack>
 using namespace std;
 
-vector<int> nextSmallerHeight(vector<int> &heights, int n){
-    stack<int> st;
-    st.push(-1);
-    vector<int> ans(n);
+bool isValid(string s){
+    stack<char> st;
 
-    for(int i=n-1; i>=0; i--){
-        int curr = heights[i];
-        while(st.top() != -1 && heights[st.top()] >= curr){
-            st.pop();
+    for(int i=0; i<s.length(); i++){
+        char ch = s[i];
+
+        if(ch == ')' || ch == '}' || ch == ']'){
+            if(st.empty()){
+                return false;
+            }
+            if((ch == ')' && st.top() == '(') || (ch == '}' && st.top() == '{') || (ch == ']' && st.top() == '[')){
+                st.pop();
+            }
+            else{
+                return false;
+            }
         }
-
-        ans[i] = st.top();
-        st.push(i);
+        else{
+            st.push(ch);
+        }
     }
 
-    return ans;
-}
-
-vector<int> prevSmallerHeight(vector<int> &heights, int n){
-    stack<int> st;
-    st.push(-1);
-    vector<int> ans(n);
-
-    for(int i=0; i<n; i++){
-        int curr = heights[i];
-        while(st.top() != -1 && heights[st.top()] >= curr){
-            st.pop();
-        }
-        ans[i] = st.top();
-        st.push(i);
+    if(!st.empty()){
+        return false;
     }
-    return ans;
+    return true;
 }
 
 int main()
 {
-    int n;
-    cout<<"Enter the size of array"<<endl;
-    cin>>n;
+    string s;
+    cin>>s;
 
-    cout<<"Enter the heights"<<endl;
-    vector<int> heights(n);
-    for(int i=0; i<n; i++){
-        cin>>heights[i];
+    if(isValid(s)){
+        cout<<"Valid Parentheses"<<endl;
     }
-
-    vector<int> next = nextSmallerHeight(heights, n);
-    vector<int> prev = prevSmallerHeight(heights, n);
-
-    int area = 0;
-
-    for(int i=0; i<n; i++){
-        int length = heights[i];
-
-        if(next[i] == -1){
-            next[i] = n;
-        }
-
-        int breadth = next[i] - prev[i] - 1;
-        int eachArea = length*breadth;
-
-        area = max(eachArea, area);
+    else{
+        cout<<"Not a Valid Parentheses"<<endl;
     }
-
-    cout<<"Max area is : "<<area<<endl;
 
     return 0;
 }

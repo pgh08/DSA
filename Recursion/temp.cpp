@@ -1,30 +1,47 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<vector>
 using namespace std;
+
+void getPermutationResult(string str, int index, int ansIndex, int n, vector<string> &ans){
+    // Base Case.
+    if(index >= n){
+        int num = stoi(str);
+        if(num%8 == 0){
+            ans[ansIndex] = "YES";
+        }
+        return;
+    }
+
+    for(int i=index; i<n; i++){
+        swap(str[i], str[index]);
+
+        getPermutationResult(str, index+1, ansIndex, n, ans);
+
+        swap(str[i], str[index]);
+    }
+}
 
 int main()
 {
-    vector<int> apples = {4, 2, 6, 100, 101, 101, 110, 102};
-    int target = 2;
-    int diff = 0;
-    int count = 0;
-    int start = 0, end = 1;
-
-    sort(apples.begin(),apples.end());
-
-    while((start < end) && (end < apples.size())){
-        diff = apples[end] - apples[start];
-
-        if(diff <= target){
-            count = max(count, (end-start));
-            end-1;
-        }
-        else{
-            start++;
-        }
-        end++;
+    vector<string> s(5);
+    for(int i=0; i<5; i++){
+        cin>>s[i];
     }
 
-    cout<<count<<endl;
+    vector<string> ans(5, "NO");
+
+    for(int i=0; i<5; i++){
+        string str = s[i];
+        int n = str.length();
+        int index = 0;
+        int ansIndex = i;
+        getPermutationResult(str, index, ansIndex, n, ans);
+    }
+
+    for(auto i : ans){
+        cout<<i<<" ";
+    }
+    cout<<endl;
 
     return 0;
 }

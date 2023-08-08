@@ -1,29 +1,35 @@
 #include<iostream>
+#include<queue>
+#include<unordered_map>
 using namespace std;
 
 int main()
 {
-    int petrol[4] = {4,6,7,4};
-    int distance[4] = {6,5,3,5};
+    string s;
+    cout<<"Enter the string value"<<endl;
+    cin>>s;
 
-    int balance = 0;
-    int defict = 0;
-    int start = 0;
+    unordered_map<char,pair<int,int>> umap;
+    int n = s.length();
 
-    for(int i=0; i<4; i++){
-        balance += petrol[i] - distance[i];
-        if(balance < 0){
-            defict += balance;
-            start = i+1;
-            balance = 0;
+    for(int i=0; i<n; i++){
+        umap[s[i]].first++;
+        umap[s[i]].second = i;
+    }
+
+    int res = n+1;
+
+    for(auto pr : umap){
+        if(pr.second.first == 1){
+            res = min(pr.second.second, res);
         }
     }
 
-    if(balance >= 0){
-        cout<<"Starting Point is : "<<start<<endl;
+    if(res < n){
+        cout<<s[res]<<endl;
     }
     else{
-        cout<<"Not Possible"<<endl;
+        cout<<'#'<<endl;
     }
 
     return 0;

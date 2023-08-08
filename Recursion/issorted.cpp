@@ -11,7 +11,7 @@ bool isSorted(int *arr, int n){
 int main()
 {
     int n = 10;
-    int arr[n] = {1,2,3,4,5,6,7,8,9,10};
+    int arr[] = {1,2,3,4,5,6,7,8,9,10};
 
     if(isSorted(arr, n)){
         cout<<"Array is sorted"<<endl;

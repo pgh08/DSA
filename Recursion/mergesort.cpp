@@ -48,7 +48,7 @@ void mergesort(int arr[], int s, int e){
         return;
     }
     int mid = s + (e-s)/2;
-// Left part sort.
+//  Left part sort.
     mergesort(arr, s, mid);
 //  Right part sort.
     mergesort(arr, mid+1, e);
