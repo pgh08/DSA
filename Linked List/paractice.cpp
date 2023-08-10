@@ -6,30 +6,86 @@ class ListNode{
         int data;
         ListNode* next;
 
-    ListNode(int d){
-        this->data = d;
+    ListNode(int val){
+        this->data = val;
         this->next = nullptr;
     }
-
-    ~ListNode(){}
 };
 
-ListNode* insertData(ListNode* head, ListNode* &tail){
-    int data;
-    cout<<"Enter the data"<<endl;
-    cin>>data;
-    head = new ListNode(data);
+ListNode* insert(ListNode* head){
+    int value;
+    cout<<"Enter the value of node"<<endl;
+    cin>>value;
+    head = new ListNode(value);
 
-    if(data == -1){
+    if(value == -1){
         return nullptr;
     }
 
-    head->next = insertData(head->next, tail = head);
+    head->next = insert(head->next);
 
     return head;
 }
 
-void print(ListNode* head){
+ListNode* findMid(ListNode* head){
+    if(head == nullptr){
+        return nullptr;
+    }
+
+    ListNode* fast = head->next;
+    ListNode* slow = head;
+
+    while(fast != nullptr && fast->next != nullptr){
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+
+    return slow;
+}
+
+ListNode* merge(ListNode* head1, ListNode* head2){
+    if(head1 == nullptr){
+        return head2;
+    }
+    if(head2 == nullptr){
+        return head1;
+    }
+
+    ListNode* res = nullptr;
+
+    if(head1->data <= head2->data){
+        res = head1;
+
+        res->next = merge(head1->next, head2);
+    }
+    else{
+        res = head2;
+
+        res->next = merge(head1, head2->next);
+    }
+
+    return res;
+}
+
+ListNode* mergeSort(ListNode* head){
+    // Base Case.
+    if(head == nullptr || head->next == nullptr){
+        return head;
+    }
+
+    ListNode* mid = findMid(head);
+    ListNode* head2 = mid->next;
+    mid->next = nullptr;
+
+    ListNode* left = mergeSort(head);
+    ListNode* right = mergeSort(head2);
+
+    ListNode* finalHead = merge(left, right);
+
+    return finalHead;
+}
+
+void printing(ListNode* head){
     while(head != nullptr){
         cout<<head->data<<" ";
         head = head->next;
@@ -37,61 +93,18 @@ void print(ListNode* head){
     cout<<endl;
 }
 
-int getLen(ListNode* head){
-    int count = 0;
-    while(head != nullptr){
-        count++;
-        head = head->next;
-    }
-
-    return count;
-}
-
-ListNode* reverseInKGroups(ListNode* head, int len, int k){
-    ListNode* curr = head;
-    ListNode* prev = nullptr;
-    ListNode* next = nullptr;
-
-    int count = 0;
-
-    while(curr != nullptr && count < k){
-        next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
-        count++;
-    }
-    //Recursive call.
-    if(next != nullptr && (len-k) >= k){
-        head->next = reverseInKGroups(next, len-k, k);
-    }
-    else if((len-k) < k){
-        head->next = next;
-    }
-
-    return prev;
-}
-
 int main()
 {
     ListNode* head = nullptr;
-    ListNode* tail = head;
+    head = insert(head);
 
-    head = insertData(head, tail);
+    cout<<"List before sorting"<<endl;
+    printing(head);
 
-    cout<<"Before Reversing in K groups"<<endl;
-    print(head);
+    head = mergeSort(head);
 
-    int k;
-    cout<<"Enter the group in which you want to reverse"<<endl;
-    cin>>k;
-
-    int len = getLen(head);
-
-    ListNode* ans = reverseInKGroups(head, len, k);
-
-    cout<<"After reversing in K groups"<<endl;
-    print(ans);
+    cout<<"List after sorting"<<endl;
+    printing(head);
 
     return 0;
 }

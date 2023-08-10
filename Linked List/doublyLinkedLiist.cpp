@@ -147,4 +147,5 @@ int main()
     deleteAtPosition(Head, Tail, 6);
     printing(Head); 
 
+    return 0;
 } 

@@ -74,8 +74,8 @@ void cloning(Node* head1){
     }
     temp = head1;
     while(temp != NULL){
-        if(temp->next != NULL){
-            temp->next->random = temp->random? temp->random->next:temp->random;
+        if(temp->random != NULL){
+            temp->next->random = temp->random->next;
         }
         temp = temp->next->next;
     }
