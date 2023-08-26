@@ -16,8 +16,6 @@ Algorithm :
 #include<algorithm>
 using namespace std;
 
-
-
 int main()
 {
     int vertices, edges;
