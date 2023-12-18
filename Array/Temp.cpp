@@ -1,38 +1,45 @@
 #include<iostream>
 #include<vector>
-#include<map>
-#include<algorithm>
 using namespace std;
-
-bool compare(pair<int,int> a, pair<int,int> b){
-    if(a.second == b.second){
-        return a.first > b.first;
-    }
-    return a.second < b.second;
-}
 
 int main()
 {
-    vector<int> num = {1,1,2,2,2,3};
-    int n = num.size();
+    int n;
+    cout<<"Enter the size of the array"<<endl;
+    cin>>n;
 
-    map<int,int> om;
+    vector<int> nums(n, 0);
+    cout<<"Enter the elements of the array"<<endl;
+    for(int i=0; i<n; i++){
+        cin>>nums[i];
+    }
+
+    int zeroCount = 0;
+    int product = 1;
+    for(int i=0; i<n; i++){
+        if(nums[i] == 0){
+            zeroCount++;
+        }
+        else{
+            product *= nums[i];
+        }
+    }
 
     for(int i=0; i<n; i++){
-        om[num[i]]++;
+        if(zeroCount > 1){
+            cout<<"0 ";
+        }
+        else if(zeroCount == 1 && nums[i] == 0){
+            cout<<product<<" ";
+        }
+        else if(zeroCount == 0){
+            cout<<product/nums[i]<<" ";
+        }
+        else{
+            cout<<"0 ";
+        }
     }
 
-    vector<pair<int,int>> ans;
-
-    for(auto pr : om){
-        ans.push_back(pr);
-    }
-
-    sort(ans.begin(), ans.end(), compare);
-
-    for(auto i : ans){
-        cout<<i.first<<" ";
-    }
     cout<<endl;
 
     return 0;
