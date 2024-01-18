@@ -69,9 +69,9 @@ int main()
                 M[i][j] = 0;
 
             }
-            //Entire row is updated now.
-            area = max(area, largestRectangularArea(M[i], m));
         }
+        //Entire row is updated now.
+        area = max(area, largestRectangularArea(M[i], m));
     }
     cout<<"Area is : "<<area<<endl;
 
