@@ -51,12 +51,12 @@ int main()
 {
     Singleton* pgh = Singleton :: getInstance();
 
-    pgh->setValues("Prajwal", "Sahana");
+    pgh->setValues("Prajwal", "Ice-cream");
     pgh->print();
     cout<<"Address of pgh is : "<<pgh<<endl;
 
     Singleton* s = Singleton :: getInstance();
-    s->setValues("Sahana", "Prajwal");
+    s->setValues("Dog", "Prajwal");
     s->print();
     cout<<"Address of s is : "<<s<<endl;
 
