@@ -21,7 +21,7 @@ int partition(int *arr, int s, int e){
         while(arr[i] <= pivot){
             i++;
         }
-    //  Checking whether their is an element in the left part of the pivot.
+    //  Checking whether their is an element in the right part of the pivot.
         while(arr[j] > pivot){
             j--;
         }
